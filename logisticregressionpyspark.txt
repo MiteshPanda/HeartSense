@@ -1,0 +1,56 @@
+from pyspark.sql import SparkSession
+from pyspark.ml.classification import LogisticRegression
+from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.evaluation import BinaryClassificationEvaluator
+import pandas as pd
+import matplotlib.pyplot as plt
+
+spark = SparkSession.builder.appName("HeartDisease_LogisticRegression_Simple").getOrCreate()
+
+data = spark.read.csv("D:/imp/scala/heart_disease_dataset.csv", header=True, inferSchema=True)
+data.printSchema()
+data.show(5)
+
+# Assuming your dataset has "target" as label column
+label_col = "target"
+
+# Exclude the label column from feature list
+feature_cols = [c for c in data.columns if c != label_col]
+
+# Assemble multiple features into one vector column
+assembler = VectorAssembler(inputCols=feature_cols, outputCol="features")
+
+final_data = assembler.transform(data)
+
+train, test = final_data.randomSplit([0.8, 0.2], seed=42)
+
+lr = LogisticRegression(featuresCol="features", labelCol=label_col)
+model = lr.fit(train)
+
+predictions = model.transform(test)
+predictions.select("target", "probability", "prediction").show(10, truncate=False)
+
+evaluator = BinaryClassificationEvaluator(labelCol=label_col)
+acc = evaluator.evaluate(predictions)
+print(f"\n Model Accuracy (ACC): {acc:.2f}\n")
+
+print("Coefficients:", model.coefficients)
+print("Intercept:", model.intercept)
+
+# Convert to pandas for visualization
+coef_df = pd.DataFrame({'Feature': feature_cols, 'Coefficient': model.coefficients.toArray().tolist()}).sort_values(by='Coefficient', ascending=True)
+
+# Color-code for easy interpretation
+coef_df['Color'] = coef_df['Coefficient'].apply(lambda x: 'red' if x > 0 else 'blue')
+
+plt.figure(figsize=(10, 6))
+plt.barh(coef_df['Feature'], coef_df['Coefficient'], color=coef_df['Color'])
+plt.axvline(x=0, color='black', linewidth=1)
+plt.xlabel('Coefficient Value')
+plt.ylabel('Feature')
+plt.title('Feature Importance — Logistic Regression (Heart Disease)')
+plt.gca().invert_yaxis()
+plt.show()
+
+spark.stop()
+
