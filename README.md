@@ -68,37 +68,46 @@ Unlike traditional notebooks, HeartSense delivers:
 
 # System Architecture
 
-```
-                        Heart Disease Dataset
-                                │
-                                ▼
-                    Apache Spark DataFrame
-                                │
-                                ▼
-                    Feature Engineering
-                   (VectorAssembler)
-                                │
-                                ▼
-               Train/Test Split (80 / 20)
-                                │
-                                ▼
-              PySpark Logistic Regression
-                                │
-          ┌─────────────────────┴─────────────────────┐
-          ▼                                           ▼
-   Model Evaluation                           Feature Importance
- (AUC / Prediction)                          Coefficient Analysis
-          │                                           │
-          └─────────────────────┬─────────────────────┘
-                                ▼
-                    Interactive Dash Dashboard
-                                │
-     ┌─────────────┬───────────────┬─────────────────┐
-     ▼             ▼               ▼
- Dataset      Model Insights    Live Prediction
- Overview
-```
+# System Architecture
 
+```
+                        Heart Disease Dataset (.csv)
+                                   │
+                                   ▼
+                     Apache Spark DataFrame
+                                   │
+                                   ▼
+                         Data Preprocessing
+                    (Schema Inference & Cleaning)
+                                   │
+                                   ▼
+                      Feature Engineering
+                     (VectorAssembler)
+                                   │
+                                   ▼
+                    Train/Test Split (80/20)
+                                   │
+                                   ▼
+              PySpark Logistic Regression Model
+                                   │
+        ┌──────────────────────────┼──────────────────────────┐
+        │                          │                          │
+        ▼                          ▼                          ▼
+  Model Evaluation         Feature Importance         Live Inference
+ (BinaryClassification     (Coefficient Analysis)     (Probability)
+      Evaluator)                   │                          │
+        │                          │                          │
+        └──────────────┬───────────┴───────────────┬──────────┘
+                       ▼                           ▼
+              Interactive Dash Dashboard
+                       │
+     ┌─────────────────┼─────────────────┐
+     ▼                 ▼                 ▼
+ Dataset Overview   Model Insights   Heart Disease Prediction
+ (Statistics &      (Feature          (Real-Time Probability
+ Distribution)      Importance &      Estimation)
+                    Correlation)
+```
 ---
 
 # Dashboard
