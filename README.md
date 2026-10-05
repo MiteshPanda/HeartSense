@@ -68,46 +68,9 @@ Unlike traditional notebooks, HeartSense delivers:
 
 # System Architecture
 
-# System Architecture
+<img width="4435" height="7405" alt="Clinical Data Pipeline for-2026-10-05-154152" src="https://github.com/user-attachments/assets/fd4e13c6-0093-4623-9804-36ff3d82d7ba" />
 
-```
-                        Heart Disease Dataset (.csv)
-                                   │
-                                   ▼
-                     Apache Spark DataFrame
-                                   │
-                                   ▼
-                         Data Preprocessing
-                    (Schema Inference & Cleaning)
-                                   │
-                                   ▼
-                      Feature Engineering
-                     (VectorAssembler)
-                                   │
-                                   ▼
-                    Train/Test Split (80/20)
-                                   │
-                                   ▼
-              PySpark Logistic Regression Model
-                                   │
-        ┌──────────────────────────┼──────────────────────────┐
-        │                          │                          │
-        ▼                          ▼                          ▼
-  Model Evaluation         Feature Importance         Live Inference
- (BinaryClassification     (Coefficient Analysis)     (Probability)
-      Evaluator)                   │                          │
-        │                          │                          │
-        └──────────────┬───────────┴───────────────┬──────────┘
-                       ▼                           ▼
-              Interactive Dash Dashboard
-                       │
-     ┌─────────────────┼─────────────────┐
-     ▼                 ▼                 ▼
- Dataset Overview   Model Insights   Heart Disease Prediction
- (Statistics &      (Feature          (Real-Time Probability
- Distribution)      Importance &      Estimation)
-                    Correlation)
-```
+
 ---
 
 # Dashboard
