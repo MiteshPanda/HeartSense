@@ -68,8 +68,7 @@ Unlike traditional notebooks, HeartSense delivers:
 
 # System Architecture
 
-<img width="4435" height="7405" alt="Clinical Data Pipeline for-2026-10-05-154152" src="https://github.com/user-attachments/assets/fd4e13c6-0093-4623-9804-36ff3d82d7ba" />
-
+<img width="4435" height="7405" alt="Clinical Data Pipeline for-2026-10-05-154346" src="https://github.com/user-attachments/assets/2b3b2dbd-7042-491b-bed9-0bf8cd41b9f6" />
 
 ---
 
